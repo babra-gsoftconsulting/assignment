@@ -7,6 +7,9 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { ConfigModule } from '@nestjs/config'; 
 
+import { config } from 'dotenv';
+config();
+
 @Module({
   imports: [
     UserModule,
