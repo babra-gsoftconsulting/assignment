@@ -17,4 +17,8 @@ export class UserService {
   async findByEmail(email: string): Promise<User | null> {
     return this.userModel.findOne({ email }).exec();
   }
+
+  async test() :Promise<string>{
+    return "this route only access by admin";
+  }
 }

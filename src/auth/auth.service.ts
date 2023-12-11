@@ -19,8 +19,8 @@ export class AuthService {
     return null;
   }
 
-  async signIn(user: User): Promise<{ access_token: string }> {
-    const payload = { email: user.email };
+  async signIn(user: any): Promise<{ access_token: string }> {
+    const payload = { email: user.email,role: user.role,};
     return {
       access_token: this.jwtService.sign(payload),
     };
