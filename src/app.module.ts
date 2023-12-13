@@ -7,7 +7,7 @@ import { DatabaseModule } from './common/configs/database.module.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({isGlobal:true}),
     DatabaseModule,
     MongooseModule.forFeature([]),
     AuthModule,
