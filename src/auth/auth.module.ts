@@ -8,7 +8,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '../user/models/user.model';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategy/local.strategy';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { Jwt } from '../common/configs/jwt.module.config';
 

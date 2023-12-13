@@ -1,16 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './models/user.model'
+import { User } from './models/user.model';
 import { hash } from 'bcryptjs';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<User>,
+  ) {}
 
   async createUser(user: User): Promise<User> {
     const hashedPassword = await hash(user.password, 10);
-    const createdUser = new this.userModel({ ...user, password: hashedPassword });
+    const createdUser = new this.userModel({
+      ...user,
+      password: hashedPassword,
+    });
     return createdUser.save();
   }
 
@@ -18,7 +23,7 @@ export class UserService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async test() :Promise<string>{
-    return "this route only access by admin";
+  async test(): Promise<string> {
+    return 'this route only access by admin';
   }
 }

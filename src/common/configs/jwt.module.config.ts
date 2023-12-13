@@ -7,16 +7,16 @@ import { UserService } from 'src/user/user.service';
 
 @Global()
 @Module({
-	imports: [
-    MongooseModule.forFeature([{name: User.name, schema: UserSchema}]),
-		JwtModule.registerAsync({
-			useFactory: () => ({
-				secret: process.env.JWT_SECRET,
-				signOptions: { expiresIn: process.env.EXPIRE_IN },
-			}),
-		}),
-	],
-	exports: [JwtModule],
-	providers: [JwtStrategy, UserService],
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.JWT_SECRET,
+        signOptions: { expiresIn: process.env.EXPIRE_IN },
+      }),
+    }),
+  ],
+  exports: [JwtModule],
+  providers: [JwtStrategy, UserService],
 })
 export class Jwt {}

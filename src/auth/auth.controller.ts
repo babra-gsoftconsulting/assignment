@@ -1,4 +1,12 @@
-import { Controller, Post, Body, ValidationPipe, ConflictException, UseGuards, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  ValidationPipe,
+  ConflictException,
+  UseGuards,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { SignUpDto } from './dtos/signup.dto';
 import { AuthService } from 'src/auth/auth.service';
@@ -9,8 +17,8 @@ import { SignInDto } from './dtos/signin.dto';
 export class AuthController {
   constructor(
     private readonly userService: UserService,
-    private readonly authService: AuthService
-    ) {}
+    private readonly authService: AuthService,
+  ) {}
 
   @Post('signup')
   async signUp(@Body(ValidationPipe) signUpDto: SignUpDto) {
@@ -26,7 +34,10 @@ export class AuthController {
   @Post('signin')
   @UseGuards(AuthGuard('local'))
   async signIn(@Body(ValidationPipe) signInDto: SignInDto) {
-    const user = await this.authService.validateUser(signInDto.email, signInDto.password);
+    const user = await this.authService.validateUser(
+      signInDto.email,
+      signInDto.password,
+    );
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
