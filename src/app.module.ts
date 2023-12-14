@@ -6,7 +6,6 @@ import { UserModule } from './user/user.module';
 import { DatabaseModule } from './common/configs/database.module.config';
 import { BookModule } from './book/book.module';
 import { AuthMiddleware } from './common/middlewares/auth.middleware';
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -21,6 +20,7 @@ import { AuthMiddleware } from './common/middlewares/auth.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('*');
+    consumer.apply(AuthMiddleware).exclude(('auth/(.*)'))
+    .forRoutes('*')
   }
 }
