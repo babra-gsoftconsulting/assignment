@@ -23,6 +23,10 @@ export class UserService {
     return this.userModel.findOne({ email }).exec();
   }
 
+  async findAll(): Promise<User[]> {
+    return this.userModel.find();
+  }
+
   async test(): Promise<string> {
     return 'this route only access by admin';
   }
