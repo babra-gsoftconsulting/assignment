@@ -6,6 +6,7 @@ import {
   ConflictException,
   UseGuards,
   UnauthorizedException,
+  Req,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { SignUpDto } from './dtos/signup.dto';
@@ -33,14 +34,15 @@ export class AuthController {
   }
   @Post('signin')
   @UseGuards(AuthGuard('local'))
-  async signIn(@Body(ValidationPipe) signInDto: SignInDto) {
-    const user = await this.authService.validateUser(
-      signInDto.email,
-      signInDto.password,
-    );
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
+  async signIn(@Body(ValidationPipe) signInDto: SignInDto, @Req() request:Request, ) {
+    // const user = await this.authService.validateUser(
+    //   signInDto.email,
+    //   signInDto.password,
+    // );
+    // if (!user) {
+    //   throw new UnauthorizedException('Invalid credentials');
+    // }
+    const user = request;
     return this.authService.signIn(user);
   }
 }

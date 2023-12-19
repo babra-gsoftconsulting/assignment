@@ -53,7 +53,7 @@ export class BookController {
   @Get('getById/:id')
   @Roles([Role.Admin, Role.User])
   @UseGuards(JwtAuthGuard, RolesGuard)
-  findById(@Param('id') id:string): Promise<Book[]> {
+  findById(@Param('id') id: string): Promise<Book[]> {
     return this.bookService.findById(id);
   }
 }

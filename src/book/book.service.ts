@@ -23,21 +23,23 @@ export class BookService {
   ): Promise<Book> {
     const query = {
       createdBy: userId,
-      _id: id
-    }
+      _id: id,
+    };
     const existingBook = await this.bookModel.findOne(query);
 
     if (!existingBook) {
       throw new NotFoundException('Book not found');
     }
-    return await this.bookModel.findByIdAndUpdate(query, updateBookDto, {new: true})
+    return await this.bookModel.findByIdAndUpdate(query, updateBookDto, {
+      new: true,
+    });
   }
 
   async findAll(): Promise<Book[]> {
     return this.bookModel.find();
   }
 
-  async findById(id:string): Promise<Book[]> {
+  async findById(id: string): Promise<Book[]> {
     return this.bookModel.findById(id);
   }
 }

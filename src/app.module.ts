@@ -8,9 +8,23 @@ import { BookModule } from './book/book.module';
 import { AuthMiddleware } from './common/middlewares/auth.middleware';
 import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './common/middlewares/global.exception';
+import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import * as path from 'path';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: true,
+      },
+      resolvers: [
+        { use: QueryResolver, options: ['lang'] },
+        AcceptLanguageResolver,
+      ],
+    }),
     DatabaseModule,
     MongooseModule.forFeature([]),
     AuthModule,
@@ -19,15 +33,17 @@ import { GlobalExceptionFilter } from './common/middlewares/global.exception';
   ],
   controllers: [],
   providers: [
-    {
-      provide: APP_FILTER,
-      useClass: GlobalExceptionFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: GlobalExceptionFilter,
+    // },
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).exclude(('auth/(.*)'))
-    .forRoutes('*')
+    consumer
+      .apply(AuthMiddleware)
+      .exclude('auth/(.*)', 'user/(.*)', 'book/(.*)')
+      .forRoutes('*');
   }
 }
